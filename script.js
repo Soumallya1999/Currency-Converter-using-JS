@@ -2,10 +2,10 @@ const BASE_URL =
   "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies";
 
 const dropdowns = document.querySelectorAll(".dropdown select");
-const btn = document.querySelector(".btn");
-let fromCurr = document.querySelector(".from select");
-let toCurr = document.querySelector(".to select");
 const msg = document.querySelector(".msg");
+const fromCurrCode = document.querySelector(".from select");
+const toCurrCode = document.querySelector(".to select");
+const button = document.querySelector(".btn");
 
 for (let select of dropdowns) {
   for (let currCode in countryList) {
@@ -39,15 +39,16 @@ const updateExchangeRate = async () => {
     amtVal = 1;
     amount.value = "1";
   }
-  const URL = `${BASE_URL}/${fromCurr.value.toLowerCase()}/${toCurr.value.toLowerCase()}.json`;
+  const URL = `${BASE_URL}/${fromCurrCode.value.toLowerCase()}/${toCurrCode.value.toLowerCase()}.json`;
   let response = await fetch(URL);
   let data = await response.json();
-  let rate = data[toCurr.value.toLowerCase()];
+  let rate = data[toCurrCode.value.toLowerCase()];
+  console.log(rate);
   let finalAmount = amtVal * rate;
-  msg.innerText = `${amtVal} ${fromCurr.value} = ${finalAmount} ${toCurr.value}`;
+  msg.innerText = `${amtVal} ${fromCurrCode.value} = ${finalAmount} ${toCurrCode.value}`;
 };
 
-btn.addEventListener("click", (evt) => {
+button.addEventListener("click", (evt) => {
   evt.preventDefault();
   updateExchangeRate();
 });
